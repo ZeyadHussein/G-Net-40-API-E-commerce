@@ -13,7 +13,7 @@ namespace E_Commerce.API.Controllers
         #region Get All Products
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
-        public async Task<ActionResult<IReadOnlyList<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParams queryParams, CancellationToken ct)
+        public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParams queryParams, CancellationToken ct)
         {
             var products = await productservice.GetAllProductsAsync(queryParams, ct);
             return ToActionResult(products);
