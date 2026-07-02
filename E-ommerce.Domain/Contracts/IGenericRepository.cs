@@ -10,7 +10,9 @@ namespace E_commerce.Domain.Contracts
     public interface IGenericRepository<TEntity,TKey>where TEntity:BaseEntity<TKey>
     {
         Task<IReadOnlyList<TEntity>> GetAllAsync(CancellationToken ct=default);
+        Task<IReadOnlyList<TEntity>> GetAllAsync(ISpecifications<TEntity,TKey>Spec,CancellationToken ct = default);
         Task<TEntity?>GetByIdAsync(TKey Id,CancellationToken ct=default);
+        Task<TEntity?> GetByIdAsync(ISpecifications<TEntity,TKey>Spec, CancellationToken ct = default);
         void Add(TEntity entity);
         void Update(TEntity entity);
         void Remove(TEntity entity);
