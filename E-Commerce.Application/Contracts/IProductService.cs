@@ -12,7 +12,7 @@ namespace E_commerce.Application.Contracts
 {
     public interface IProductService
     {
-        Task<Result<IReadOnlyList<ProductDto>>> GetAllProductsAsync(ProductQueryParams queryParams, CancellationToken ct = default);
+        Task<Result<PaginatedResult<ProductDto>>> GetAllProductsAsync(ProductQueryParams queryParams, CancellationToken ct = default);
         Task<Result<ProductDto>>GetProductAsync(int id, CancellationToken ct=default);
         Task<Result<IReadOnlyList<BrandDto>>> GetAllBrandsAsync(CancellationToken ct = default);
         Task<Result<IReadOnlyList<TypeDto>>> GetAllTypesAsync(CancellationToken ct = default);

@@ -18,10 +18,22 @@ namespace E_commerce.Application.Specifications
             {
                 query = query.Where(Spec.CrIteria);
             }
+            if (Spec.OrderBy != null)
+            {
+                query = query.OrderBy(Spec.OrderBy);
+            }
+            if (Spec.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(Spec.OrderByDescending);
+            }
             if (Spec.IncludeExpressions.Any())
             {
                 query=Spec.IncludeExpressions.Aggregate(query,(current,NextExp)=>current.Include(NextExp));
 
+            }
+            if(Spec.IsPaginated)
+            {
+                query = query.Skip(Spec.Skip).Take(Spec.Take);
             }
 
 
