@@ -1,6 +1,7 @@
 ﻿using E_commerce.Application.Common;
 using E_commerce.Application.Contracts;
 using E_commerce.Application.DTOS.Products;
+using E_Commerce.API.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +13,11 @@ namespace E_Commerce.API.Controllers
 
         #region Get All Products
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
-        public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParams queryParams, CancellationToken ct)
+        [RedisCashe(90)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<ProductDto>))]
+        public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts(
+     [FromQuery] ProductQueryParams queryParams,
+     CancellationToken ct)
         {
             var products = await productservice.GetAllProductsAsync(queryParams, ct);
             return ToActionResult(products);
