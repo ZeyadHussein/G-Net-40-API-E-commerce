@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace E_commerce.Domain.Contracts
+{
+    public interface ICacheRepository
+    {
+        Task<string?> GetAsync(string casheKey, CancellationToken ct = default);
+        Task SetAsync(string casheKey, string casheValue, TimeSpan TimeToLive, CancellationToken ct = default);
+    }
+}
