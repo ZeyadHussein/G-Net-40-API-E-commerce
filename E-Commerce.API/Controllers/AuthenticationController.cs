@@ -1,5 +1,6 @@
 ﻿using E_commerce.Application.Contracts;
 using E_commerce.Application.DTOS.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,29 @@ namespace E_Commerce.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto, CancellationToken ct = default)
         => ToActionResult(await _authenticationService.RegisterAsync(registerDto, ct));
+        #endregion
+        #region EmailExists
+        [HttpGet("emailexists")]
+        public async Task<ActionResult<bool>> CheckEmail([FromQuery] string email, CancellationToken ct)
+            => ToActionResult(await _authenticationService.CheckEmailAsync(email, ct));
+        #endregion
+        #region GetCurrentUser
+        [Authorize]
+        [HttpGet("currentuser")]
+        public async Task<ActionResult<UserDto>> GetCurrentUser(CancellationToken ct)
+        => ToActionResult(await _authenticationService.GetCurrentUserAsync(GetEmailFromToken(), ct));
+        #endregion
+        #region UserAddress
+        [Authorize]
+        [HttpGet("address")]
+        public async Task<ActionResult<AddressDto>> GetUserAddress(CancellationToken ct)
+            => ToActionResult(await _authenticationService.GetUserAddressAsync(GetEmailFromToken(), ct));
+        #endregion
+        #region Update Address
+        [Authorize]
+        [HttpPut("address")]
+        public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto addressDto, CancellationToken ct)
+            => ToActionResult(await _authenticationService.UpdateUserAddressAsync( addressDto, GetEmailFromToken(), ct));
         #endregion
     }
 }

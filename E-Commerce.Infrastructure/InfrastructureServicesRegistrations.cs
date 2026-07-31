@@ -63,6 +63,11 @@ namespace E_commerce.Infrastructure
 
             services.AddScoped<ITokenService, TokenService>();
             #region Token
+
+            // Bind and register JWTSetting
+            services.Configure<JWTSettings>(configuration.GetSection("JWT"));
+
+            //Fetch it manually just for the AddJwtBeat
             var jwtSettings= configuration.GetSection("JWT").Get<JWTSettings>()
                 ?? throw new InvalidOperationException("JWT settings Is Not Configured");
 
