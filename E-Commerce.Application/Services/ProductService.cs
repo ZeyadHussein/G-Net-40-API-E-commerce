@@ -54,7 +54,7 @@ namespace E_commerce.Application.Services
             
         }
 
-        public async Task<Result<IReadOnlyList<BrandDto>>> GetAllBrandsAsync(CancellationToken ct = default)
+        public async Task<Result<IReadOnlyList<BrandDto>>> GetAllBrandsAsync(CancellationToken ct)
         {
           var brands = await _unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync(ct);
             return Result<IReadOnlyList<BrandDto>>.Ok(_mapper.Map<IReadOnlyList<BrandDto>>(brands));

@@ -14,15 +14,12 @@ namespace E_commerce.Domain.Entities.Orders
             
         }
 
-        public Order(string buyerEmail,  ICollection<OrderItem> items, OrderAddress shipToAddress, DeliveryMethod deliveryMethod, int deliveryMethodId, decimal subTotal)
+        public Order(string buyerEmail,  ICollection<OrderItem> items, OrderAddress shipToAddress, DeliveryMethod deliveryMethod, decimal subTotal)
         {
             BuyerEmail = buyerEmail;
-       
             Items = items;
             ShipToAddress = shipToAddress;
             DeliveryMethod = deliveryMethod;
-            DeliveryMethodId = deliveryMethodId;
-           
             SubTotal = subTotal;
         }
 
