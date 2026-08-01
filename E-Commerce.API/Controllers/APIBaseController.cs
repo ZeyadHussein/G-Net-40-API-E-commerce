@@ -1,6 +1,7 @@
 ﻿using E_commerce.Application.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace E_Commerce.API.Controllers
 {
@@ -8,9 +9,9 @@ namespace E_Commerce.API.Controllers
     [ApiController]
     public class APIBaseController : ControllerBase
     {
-        public static ActionResult<T>ToActionResult<T>(Result<T> result)
+        public static ActionResult<T> ToActionResult<T>(Result<T> result)
         {
-            if(result.IsSuccess)
+            if (result.IsSuccess)
             {
                 return new OkObjectResult(result.data);
 
@@ -40,7 +41,7 @@ namespace E_Commerce.API.Controllers
                 ErrorType.Conflict => StatusCodes.Status409Conflict,
                 ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
                 ErrorType.Forbidden => StatusCodes.Status403Forbidden,
-                _=> StatusCodes.Status500InternalServerError,
+                _ => StatusCodes.Status500InternalServerError,
 
             };
             var problem = new ProblemDetails
@@ -50,7 +51,11 @@ namespace E_Commerce.API.Controllers
                 Detail = first.desciption,
                 Extensions = { ["errors"] = errors }
             };
-            return new ObjectResult(problem) { StatusCode=status}; 
+            return new ObjectResult(problem) { StatusCode = status };
         }
+
+        protected string GetEmailFromToken()
+        => User.FindFirstValue(ClaimTypes.Email)
+            ?? throw new UnauthorizedAccessException("No Email Claim Found");
     }
 }
