@@ -4,6 +4,7 @@ using E_commerce.Infrastructure.Data;
 using E_commerce.Infrastructure.Identity.Data;
 using E_commerce.Infrastructure.Identity.Entities;
 using E_commerce.Infrastructure.Identity.Services;
+using E_commerce.Infrastructure.Payments;
 using E_commerce.Infrastructure.Repositories;
 using E_commerce.Infrastructure.Seeding;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -96,12 +97,13 @@ namespace E_commerce.Infrastructure
                 };
 
             });
-            return services;
-
-            #endregion
 
 
             #endregion
+
+
+            #endregion
+            services.AddSingleton<IPaymentGetway, StripePaymentGetWay>();
 
             return services;
         }
